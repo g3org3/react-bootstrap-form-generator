@@ -1,5 +1,6 @@
 # react-bootstrap-form-generator
 provide a schema and a layout and it will generate the form for you
+>📝 schema -> 📔 react-bootstrap-form
 
 ## Install
 ```sh
