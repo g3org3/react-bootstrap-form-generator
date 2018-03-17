@@ -17,6 +17,7 @@ yarn add react-bootstrap-form-generator
 | verbose            | bool        | -       | for development usage only
 | cancelLabel        | string      | -       | label for the cancel button
 | onCancel           | func        | -       | called when you click the cancel button, not providing a function will hide the button
+| defaultValue       | object      | -       |
 
 ## Example
 [See Example](/example/README.md)
