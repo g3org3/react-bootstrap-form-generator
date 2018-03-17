@@ -195,7 +195,7 @@ class Form extends Component {
         <Grid layout={layout} items={fields} verbose={verbose} />
         <div className="form-group">
           { onCancel
-            ? <button onClick={onCancel} className="btn btn-default">
+            ? <button onClick={onCancel} style={{marginRight: '20px'}} className="btn btn-default">
               {cancelLabel}
             </button>
             : null
