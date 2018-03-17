@@ -189,11 +189,17 @@ class Form extends Component {
 
   render() {
     const fields = this.propsToInputs()
-    const { layout, verbose, submitLabel } = this.props
+    const { layout, verbose, submitLabel, onCancel } = this.props
     return (
       <form onSubmit={this.onSubmit}>
         <Grid layout={layout} items={fields} verbose={verbose} />
         <div className="form-group">
+          { onCancel
+            ? <button onClick={onCancel} className="btn btn-default">
+              {cancelLabel}
+            </button>
+            : null
+          }
           <button type="submit" className="btn btn-primary">
             {submitLabel}
           </button>
@@ -214,7 +220,9 @@ Form.propTypes = {
   onSubmit: PropTypes.func,
   verbose: PropTypes.bool,
   submitLabel: PropTypes.string,
-  layout: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number))
+  layout: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
+  cancelLabel: PropTypes.string,
+  onCancel: PropTypes.func,
 }
 
 export default Form
