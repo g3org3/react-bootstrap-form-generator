@@ -189,7 +189,7 @@ class Form extends Component {
 
   render() {
     const fields = this.propsToInputs()
-    const { layout, verbose, submitLabel, onCancel } = this.props
+    const { layout, verbose, submitLabel, onCancel, cancelLabel } = this.props
     return (
       <form onSubmit={this.onSubmit}>
         <Grid layout={layout} items={fields} verbose={verbose} />
@@ -212,7 +212,8 @@ class Form extends Component {
 
 Form.defaultProps = {
   onSubmit: () => {},
-  submitLabel: 'submit'
+  submitLabel: 'submit',
+  cancelLabel: 'cancel'
 }
 
 Form.propTypes = {
