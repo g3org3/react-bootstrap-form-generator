@@ -31,3 +31,10 @@ npm i --save react-bootstrap-form-generator
 ```sh
 yarn start
 ```
+
+## Style
+Just for quick play around with this you may add this to the index.html at the headers
+```html
+<!-- my-app/public/index.html -->
+<link rel="stylesheet" href="https://bootswatch.com/3/flatly/bootstrap.min.css">
+```
