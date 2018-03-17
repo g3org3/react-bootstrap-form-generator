@@ -7,9 +7,13 @@ const outlines = { border: '1px solid orange', padding: '20px' }
 const Grid = ({ layout=false, items=[], verbose }) => {
   let i = 0
   if (!layout) {
-    return items
+    return <div className="row">
+      <div className="col-md-12">
+        {items}
+      </div>
+    </div>
   }
-  return <React.Fragment>
+  return <div>
     {layout.map(row => (
       <div key={`${i}`} className="row" style={verbose? outlines: {}}>
         {row.map(col => (
@@ -19,7 +23,7 @@ const Grid = ({ layout=false, items=[], verbose }) => {
         ))}
       </div>
     ))}
-  </React.Fragment>
+  </div>
 }
 
 const InputText = ({label, name, type, value, onChange, disabled}) => (
@@ -46,7 +50,7 @@ const TextArea = ({label, name, required, disabled, onChange}) => (
 const InputSelect = ({label, name, value, onChange, disabled, options, required}) => (
   <div className="form-group">
     <label style={capitalize}>{label||name}</label>
-    <select className="form-control" name={name} onChange={onChange} required={required} disabled={disabled}>
+    <select className="form-control" name={name} onChange={onChange} required={required} disabled={disabled} value={value}>
       <option value="">--</option>
       {options.map(option => {
         const value = typeof option === 'string'? option : option.value
@@ -85,10 +89,11 @@ class Form extends Component {
     super(props)
     this.onSubmit = this.onSubmit.bind(this)
     this.onChange = this.onChange.bind(this)
-    this.state = Object.keys(this.props.schema).reduce((_obj, key) => {
+    const empty = Object.keys(this.props.schema).reduce((_obj, key) => {
       _obj[key] = this.props.schema[key].type === 'checkbox'? {} : ''
       return _obj
     }, {})
+    this.state = this.props.defaultValue ? Object.assign(empty, this.props.defaultValue) : empty
   }
 
   onChange({ target }) {
@@ -122,6 +127,9 @@ class Form extends Component {
           onChange={this.onChange}
           value={this.state[field]}
         />
+      }
+      if (spec.hidden) {
+        return null
       }
       switch(spec.type) {
         case 'textarea': {
@@ -189,15 +197,21 @@ class Form extends Component {
 
   render() {
     const fields = this.propsToInputs()
-    const { layout, verbose, submitLabel, onCancel, cancelLabel } = this.props
+    const {
+      layout,
+      verbose,
+      submitLabel,
+      onCancel,
+      cancelLabel
+    } = this.props
     return (
       <form onSubmit={this.onSubmit}>
         <Grid layout={layout} items={fields} verbose={verbose} />
         <div className="form-group">
           { onCancel
-            ? <button onClick={onCancel} style={{marginRight: '20px'}} className="btn btn-default">
+            ? <a href="#" onClick={onCancel} style={{marginRight: '20px'}} className="btn btn-default">
               {cancelLabel}
-            </button>
+            </a>
             : null
           }
           <button type="submit" className="btn btn-primary">
@@ -224,6 +238,7 @@ Form.propTypes = {
   layout: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
   cancelLabel: PropTypes.string,
   onCancel: PropTypes.func,
+  defaultValue: PropTypes.object
 }
 
 export default Form
