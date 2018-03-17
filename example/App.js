@@ -29,6 +29,10 @@ const userSchema = {
     type: 'string:time',
     label: 'At what time?'
   },
+  date: {
+    type: 'string:date',
+    label: 'Your birth date'
+  },
   features: {
     type: 'checkbox',
     label: 'Select the features!',
@@ -36,10 +40,6 @@ const userSchema = {
       { value: 'beta', label: 'Experimental!' },
       { value: 'stable', label: 'Normal'}
     ]
-  },
-  date: {
-    type: 'string:date',
-    label: 'Your birth date'
   },
   order: {
     type: 'radio',
@@ -59,17 +59,17 @@ const handleSubmit = (data) => {
   console.log(data)
 }
 const layout = [
-  [4, 8],
+  [4, 4, 4],
   [6, 6],
   [4, 4, 4],
-  [6, 6]
+  [12]
 ]
 export default () => (<React.Fragment>
   <div className="navbar navbar-default navbar-static-top" />
   <div className="container">
     <h1>Example of generated form</h1>
     <Form
-      verbose
+      verbose={false}
       layout={layout}
       schema={userSchema}
       submitLabel="send it!"
