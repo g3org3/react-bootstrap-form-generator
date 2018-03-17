@@ -189,12 +189,13 @@ class Form extends Component {
 
   render() {
     const fields = this.propsToInputs()
+    const { layout, verbose, submitLabel } = this.props
     return (
       <form onSubmit={this.onSubmit}>
-        <Grid layout={this.props.layout} items={fields} verbose={this.props.verbose} />
+        <Grid layout={layout} items={fields} verbose={verbose} />
         <div className="form-group">
           <button type="submit" className="btn btn-primary">
-            {this.props.submitLabel}
+            {submitLabel}
           </button>
         </div>
         { verbose? <pre>{JSON.stringify(this.state, null, 2)}</pre>: null }
