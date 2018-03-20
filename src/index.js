@@ -101,6 +101,7 @@ class Form extends Component {
 
   onChange({ target }) {
     const { name, value, checked, type } = target
+    this.props.onChange({ key: name, value, checked })
     if (type === 'checkbox') {
       this.setState({
         [name]: Object.assign(this.state[name], {
@@ -228,6 +229,7 @@ class Form extends Component {
 
 Form.defaultProps = {
   onSubmit: () => {},
+  onChange: () => {},
   submitLabel: 'submit',
   cancelLabel: 'cancel'
 }
@@ -240,6 +242,7 @@ Form.propTypes = {
   layout: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
   cancelLabel: PropTypes.string,
   onCancel: PropTypes.func,
+  onChange: PropTypes.func,
   defaultValue: PropTypes.object
 }
 
