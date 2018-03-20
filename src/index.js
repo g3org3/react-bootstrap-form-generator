@@ -14,9 +14,9 @@ const Grid = ({ layout=false, items=[], verbose }) => {
     </div>
   }
   return <div>
-    {layout.map(row => (
-      <div key={`${i}`} className="row" style={verbose? outlines: {}}>
-        {row.map(col => (
+    {layout.map((row, r) => ! items[i] ? null : (
+      <div key={`${r}`} className="row" style={verbose? outlines: {}}>
+        {row.map(col => ! items[i] ? null : (
           <div key={`${i}-${col}`} className={`col-md-${col}`} style={verbose? outlines: {}}>
             {items[i++]}
           </div>
@@ -40,10 +40,10 @@ const InputText = ({label, name, type, value, onChange, disabled}) => (
   </div>
 )
 
-const TextArea = ({label, name, required, disabled, onChange}) => (
+const TextArea = ({label, name, value, required, disabled, onChange}) => (
   <div className="form-group">
     <label style={capitalize}>{label||name}</label>
-    <textarea className="form-control" name={name} required={required} disabled={disabled} onChange={onChange} />
+    <textarea value={value} className="form-control" name={name} required={required} disabled={disabled} onChange={onChange} />
   </div>
 )
 
@@ -61,21 +61,24 @@ const InputSelect = ({label, name, value, onChange, disabled, options, required}
   </div>
 )
 
-const InputChoice = ({ type, label, name, onChange, options, disabled, required }) => (
+const InputChoice = ({ value, type, label, name, onChange, options, disabled, required }) => (
   <div className="form-group">
     <label style={capitalize}>{label||name}</label>
     {options.map(option => {
-      const value = typeof option === 'string'? option : option.value
-      const labelText = typeof option === 'string'? option : option.label
-      return <div className="checkbox" key={value+name}>
+      const optionValue = typeof option === 'string' ? option : option.value
+      const labelText = typeof option === 'string' ? option : option.label
+      const checked = type === 'checkbox' ? value[optionValue] : value === optionValue
+      return <div key={optionValue+name}>
       <label>
         <input
           name={name}
           type={type}
           onClick={onChange}
-          value={value}
           disabled={disabled}
+          onChange={onChange}
           required={required}
+          value={optionValue}
+          checked={checked}
         />
         {labelText}
       </label>
@@ -112,8 +115,8 @@ class Form extends Component {
   }
 
   propsToInputs() {
-    const {schema} = this.props
-    const fields = Object.keys(schema)
+    const { schema } = this.props
+    const fields = Object.keys(schema).filter(key => typeof schema[key] == 'string' || schema[key].hidden !== true)
     return fields.map(field => {
       const spec = schema[field]
       if (typeof spec == 'string') {
@@ -128,9 +131,6 @@ class Form extends Component {
           value={this.state[field]}
         />
       }
-      if (spec.hidden) {
-        return null
-      }
       switch(spec.type) {
         case 'textarea': {
           return <TextArea
@@ -140,6 +140,7 @@ class Form extends Component {
             required={spec.required}
             disabled={spec.disabled}
             onChange={this.onChange}
+            value={this.state[field]}
           />
         }
         case 'checkbox':
@@ -153,6 +154,7 @@ class Form extends Component {
             disabled={spec.disabled}
             onChange={this.onChange}
             options={spec.options}
+            value={this.state[field]}
           />
         }
         case 'select': {
