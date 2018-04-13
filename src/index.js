@@ -26,7 +26,7 @@ const Grid = ({ layout=false, items=[], verbose }) => {
   </div>
 }
 
-const InputText = ({label, name, type, value, onChange, disabled}) => (
+const InputText = ({label, name, type, value, onChange, disabled, placeholder}) => (
   <div className="form-group">
     <label style={capitalize}>{label||name}</label>
     <input
@@ -34,6 +34,7 @@ const InputText = ({label, name, type, value, onChange, disabled}) => (
       className="form-control"
       type={type}
       onChange={onChange}
+      placeholder={placeholder||name}
       value={value}
       disabled={disabled}
     />
@@ -184,6 +185,7 @@ class Form extends Component {
             label={spec.label}
             required={spec.required}
             disabled={spec.disabled}
+            placeholder={spce.placeholder}
             type={type}
             onChange={this.onChange}
             value={this.state[field]}
@@ -205,7 +207,8 @@ class Form extends Component {
       verbose,
       submitLabel,
       onCancel,
-      cancelLabel
+      cancelLabel,
+      submitBtnClass
     } = this.props
     return (
       <form onSubmit={this.onSubmit}>
@@ -217,7 +220,7 @@ class Form extends Component {
             </a>
             : null
           }
-          <button type="submit" className="btn btn-primary">
+          <button type="submit" className={submitBtnClass? submitBtnClass : "btn btn-primary"}>
             {submitLabel}
           </button>
         </div>
@@ -243,7 +246,8 @@ Form.propTypes = {
   cancelLabel: PropTypes.string,
   onCancel: PropTypes.func,
   onChange: PropTypes.func,
-  defaultValue: PropTypes.object
+  defaultValue: PropTypes.object,
+  submitBtnClass: PropTypes.string
 }
 
 export default Form
