@@ -185,7 +185,7 @@ class Form extends Component {
             label={spec.label}
             required={spec.required}
             disabled={spec.disabled}
-            placeholder={spce.placeholder}
+            placeholder={spec.placeholder}
             type={type}
             onChange={this.onChange}
             value={this.state[field]}
