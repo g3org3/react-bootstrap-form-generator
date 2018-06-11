@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\"",
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "posttest": "npm run build"
   },
   "files": [
     "dist"
