@@ -1,12 +1,20 @@
 language: node_js
 cache:
   directories:
-    - node_modules
+  - node_modules
 node_js:
-  - '8'
+- '8'
 before_script:
-  - npm prune
+- npm prune
 script:
-  - npm t
+- npm t
 notifications:
   email: false
+deploy:
+  provider: npm
+  email: 7jagjag@gmail.com
+  api_key:
+    secure: HJr+UT2drf3Sf0FMWZPf5oMkrIGZw+mVAMqhOtOGjpur2zyTOm4mCkeA+dTwfc8QjiAVfXRNJsVFdiqfjUGzypOiHapJsylFuSN72gOVF8Q4rXRbyb14LOF2leTyQ2P+003DNaZ7pMgmrjoI/w8wSmQKJu368otmKtGlpjnVpT9V7xgytcuKiGHBEeg/6vwiQuvFf9kg+lEKwmQvNSp5WjegxUJPudS0NciQ0/XpDcR8YWKyMo3EHerWppPIGsVtBqvkWZuvUyb3wS3gavpOGu9X3GTdjY9rrgIe4dGH0ZOcoeGaGLYlj3gIyo1J6GTjn0/AL+uOqtUJQRJEhh0vxNimvnMiq4Sv+oFiELIr65Qpd6T0DJa0tmhAiFaWzTDhd3cR5XxokfzMmloV/KjOR+jWxBonYj9Ym+eBfsHh5gtJl2aq2HMuz+z/i/v09MZHzvr+KcqvkMaNgO6ZbRyeq3ZIrXU96ouPZWrW+KHD8fG4ytMv8j+9AwvfBqsPv7hakYyplVJpSDBpjK1yyLB3KvVujZxGKv9Ki4kR7Dg5944Yu2z2o+X1lVSvlAkBX9y4mG6PxmHAnBHfRlKQS++sCJ4ukug910KHwpy2tyR3NiBTdidnr7SgK12PmQ7gT9Ubmtpt/BC0CX2S0gZ2OyWk7dajhTxUAb8fsdrSTFZ4LOY=
+  on:
+    tags: true
+  skip_cleanup: true
