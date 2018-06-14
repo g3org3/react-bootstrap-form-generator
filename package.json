@@ -9,7 +9,8 @@
     "posttest": "npm run build"
   },
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
   "keywords": [],
   "author": "George <7jagjag@gmail.com>",
